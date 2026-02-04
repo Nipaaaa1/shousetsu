@@ -1,0 +1,10 @@
+{
+  "typeCheckingMode": "basic",
+  "useLibraryCodeForTypes": true,
+  "venvPath": ".",
+  "venv": ".venv",
+  "defineConstant": {
+    "DJANGO_SETTINGS_MODULE": "core.settings"
+  },
+  "reportMissingImports": true
+}
