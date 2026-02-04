@@ -9,6 +9,13 @@ class ArcIndexPage(Page):
 
     content_panels = Page.content_panels + [FieldPanel("description")]
 
+    def get_context(self, request):
+        context = super().get_context(request)
+        arcs = self.get_children().live().order_by("-first_published_at")
+
+        context["arcs"] = arcs
+        return context
+
 
 class ArcDetailPage(Page):
     description = RichTextField(blank=True)
