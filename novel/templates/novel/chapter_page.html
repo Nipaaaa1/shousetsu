@@ -6,13 +6,13 @@
 <h1 class="text-6xl">{{ page.title }}</h1>
 <div>
   {% image page.thumbnail format-webp class="w-full h-max" %}
-  {{ page.description|richtext }}
+  <div>
+    {{ page.content|richtext }}
+  </div>
+  <div>
+    {{ page.postscript|richtext }}
+  </div>
 </div>
 
-{% for chapter in chapters %}
-<div>
-  <a href="{% pageurl chapter %}">{{ chapter.title }}</a>
-</div>
-{% endfor %}
 
 {% endblock content %}

@@ -1,6 +1,6 @@
 from django.db import models
-from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.models import Orderable, Page, ParentalKey
+from wagtail.admin.panels import FieldPanel
+from wagtail.models import Page
 from wagtail.fields import RichTextField
 
 
@@ -8,10 +8,11 @@ class ArcIndexPage(Page):
     description = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [FieldPanel("description")]
+    subpage_types = ["ArcDetailPage"]
 
     def get_context(self, request):
         context = super().get_context(request)
-        arcs = self.get_children().live().order_by("-first_published_at")
+        arcs = ArcDetailPage.objects.live().order_by("-first_published_at")  # pyright: ignore
 
         context["arcs"] = arcs
         return context
@@ -19,15 +20,24 @@ class ArcIndexPage(Page):
 
 class ArcDetailPage(Page):
     description = RichTextField(blank=True)
+    thumbnail = models.ForeignKey(
+        "wagtailimages.image",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
 
     content_panels = Page.content_panels + [
-        InlinePanel("arc_thumbnail", label="Arc Thumbnail"),
+        FieldPanel("thumbnail"),
         FieldPanel("description"),
     ]
+    parent_page_types = ["ArcIndexPage"]
+    subpage_types = ["ChapterPage"]
 
     def get_context(self, request):
         context = super().get_context(request)
-        chapters = self.get_children().live().order_by("-first_published_at")
+        chapters = ChapterPage.objects.live().order_by("-first_published_at")  # pyright: ignore
 
         context["chapters"] = chapters
         return context
@@ -35,34 +45,18 @@ class ArcDetailPage(Page):
 
 class ChapterPage(Page):
     content = RichTextField()
+    thumbnail = models.ForeignKey(
+        "wagtailimages.image",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
     postscript = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
-        InlinePanel("chapter_thumbnail", label="Chapter Thumbnail"),
+        FieldPanel("thumbnail"),
         FieldPanel("content"),
         FieldPanel("postscript"),
     ]
-
-
-class ArcThumbnail(Orderable):
-    page = ParentalKey(
-        ArcDetailPage, related_name="arc_thumbnail", on_delete=models.CASCADE
-    )
-
-    image = models.ForeignKey(
-        "wagtailimages.image", related_name="+", on_delete=models.CASCADE
-    )
-
-    panels = [FieldPanel("image")]
-
-
-class ChapterThumbnail(Orderable):
-    page = ParentalKey(
-        ChapterPage, related_name="chapter_thumbnail", on_delete=models.CASCADE
-    )
-
-    image = models.ForeignKey(
-        "wagtailimages.image", related_name="+", on_delete=models.CASCADE
-    )
-
-    panels = [FieldPanel("image")]
+    parent_page_types = ["ArcDetailPage"]
