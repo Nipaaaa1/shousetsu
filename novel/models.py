@@ -25,6 +25,13 @@ class ArcDetailPage(Page):
         FieldPanel("description"),
     ]
 
+    def get_context(self, request):
+        context = super().get_context(request)
+        chapters = self.get_children().live().order_by("-first_published_at")
+
+        context["chapters"] = chapters
+        return context
+
 
 class ChapterPage(Page):
     content = RichTextField()
