@@ -14,5 +14,18 @@
   </div>
 </div>
 
+<nav>
+  {% if page.prev_chapter %}
+    <a href="{{ page.prev_chapter.url }}">
+      ← {{ page.prev_chapter.title }}
+    </a>
+  {% endif %}
+
+  {% if page.next_chapter %}
+    <a href="{{ page.next_chapter.url }}">
+      {{ page.next_chapter.title }} →
+    </a>
+  {% endif %}
+</nav>
 
 {% endblock content %}

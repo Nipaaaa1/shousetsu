@@ -7,6 +7,9 @@
 <div>
   {% image page.thumbnail format-webp class="w-full h-max" %}
   {{ page.description|richtext }}
+  <div>
+    {{ page.status }}
+  </div>
 </div>
 
 {% for chapter in chapters %}
