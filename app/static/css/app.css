@@ -4,14 +4,18 @@
   :root, :host {
     --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-red-500: oklch(63.7% 0.237 25.331);
-    --color-teal-500: oklch(70.4% 0.14 182.503);
+    --spacing: 0.25rem;
     --text-6xl: 3.75rem;
     --text-6xl--line-height: 1;
+    --font-weight-bold: 700;
+    --tracking-tight: -0.025em;
+    --tracking-wide: 0.025em;
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --font-primary: "Literata", sans-serif;
   }
 }
 @layer base {
@@ -187,14 +191,34 @@
   .block {
     display: block;
   }
-  .bg-teal-500 {
-    background-color: var(--color-teal-500);
+  .h-max {
+    height: max-content;
+  }
+  .w-full {
+    width: 100%;
+  }
+  .font-primary {
+    font-family: var(--font-primary);
+  }
+  .font-serif {
+    font-family: var(--font-serif);
   }
   .text-6xl {
     font-size: var(--text-6xl);
     line-height: var(--tw-leading, var(--text-6xl--line-height));
   }
-  .text-red-500 {
-    color: var(--color-red-500);
-  }
+}
+@font-face {
+  font-family: "Literata";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/Literata-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Literata";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/Literata-Bold.woff") format("woff");
 }
