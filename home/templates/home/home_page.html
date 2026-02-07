@@ -1,11 +1,24 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
 
 <h1 class="text-6xl">{{ page.title }}</h1>
 <div>
   {{ page.description|richtext }}
+</div>
+
+<div class="w-full">
+  <h2>Baca Arc Terbaru</h2>
+  <div>
+    <span>Arc ke {{ latest_arc.arc_number }}</span>
+    <h3>
+      <a href="{% pageurl latest_arc %}">{{ latest_arc.title }}</a>
+    </h3>
+    {% if latest_arc.thumbnail %}
+    {% image latest_arc.thumbnail format-webp class="w-full h-max" %}
+    {% endif %}
+  </div>
 </div>
 
 {% endblock content %}
