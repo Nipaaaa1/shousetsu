@@ -2,45 +2,106 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>
-            {% block title %}
-            {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
-            {% endblock %}
-            {% block title_suffix %}
-            {% wagtail_site as current_site %}
-            {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
-            {% endblock %}
-        </title>
-        {% if page.search_description %}
-        <meta name="description" content="{{ page.search_description }}" />
-        {% endif %}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      {% block title %}
+      {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+      {% endblock %}
+      {% block title_suffix %}
+      {% wagtail_site as current_site %}
+      {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+      {% endblock %}
+    </title>
 
-        {# Force all links in the live preview panel to be opened in a new tab #}
-        {% if request.in_preview_panel %}
-        <base target="_blank">
-        {% endif %}
+    {% if page.search_description %}
+    <meta name="description" content="{{ page.search_description }}" />
+    {% endif %}
 
-        {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        {% block extra_css %}
-        {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
-    </head>
+    {% if request.in_preview_panel %}
+    <base target="_blank">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  </head>
 
-    <body class="font-primary">
-        {% wagtailuserbar %}
+  <body class="font-primary" data-theme="retro">
+    {% wagtailuserbar %}
 
-        {% block content %}{% endblock %}
+    <!-- Navigation -->
+    <header class="border-b border-base-300">
+      <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <!-- Brand -->
+        <a href="/" class="text-xl font-semibold">
+          {{ current_site.site_name|default:"Novel" }}
+        </a>
 
-        {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex items-center gap-8 text-sm">
+          <li><a href="#" class="link link-hover">Beranda</a></li>
+          <li><a href="#" class="link link-hover">Daftar Arc</a></li>
+          <li><a href="#" class="link link-hover">Tentang</a></li>
+        </ul>
 
-        {% block extra_js %}
-        {# Override this in templates to add extra javascript #}
-        {% endblock %}
-    </body>
+        <!-- Hamburger -->
+        <button
+          id="menu-button"
+          class="md:hidden btn btn-ghost btn-square"
+          aria-label="Open menu"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </nav>
+
+      <!-- Mobile Menu -->
+      <div
+        id="mobile-menu"
+        class="md:hidden hidden border-t border-base-300"
+      >
+        <ul class="flex flex-col px-6 py-4 gap-4 text-sm">
+          <li><a href="#" class="link link-hover">Beranda</a></li>
+          <li><a href="#" class="link link-hover">Daftar Arc</a></li>
+          <li><a href="#" class="link link-hover">Tentang</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-base-300 mt-24">
+      <div class="max-w-6xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-2">
+        <div class="space-y-3">
+          <h3 class="font-semibold text-lg">
+            {{ current_site.site_name|default:"Novel" }}
+          </h3>
+          <p class="text-sm opacity-70 max-w-md">
+            Sebuah cerita yang disajikan perlahan.
+            Dibaca tanpa gangguan, dinikmati tanpa terburu-buru.
+          </p>
+        </div>
+
+        <div class="flex gap-6 md:justify-end text-sm">
+          <a href="#" class="link link-hover">Tentang</a>
+          <a href="#" class="link link-hover">Kontak</a>
+          <a href="#" class="link link-hover">Kebijakan</a>
+        </div>
+      </div>
+
+      <div class="text-center text-xs opacity-60 pb-6">
+        © {{ now|date:"Y" }} {{ current_site.site_name }}
+      </div>
+    </footer>
+
+    <script src="{% static 'js/app.js' %}"></script>
+  </body>
 </html>

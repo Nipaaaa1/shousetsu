@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, retro;
+}
+@plugin "@tailwindcss/typography";
+
 @font-face {
   font-family: "Literata";
   font-style: normal;
@@ -17,5 +22,5 @@
 }
 
 @theme {
-  --font-primary: "Literata", sans-serif
+  --font-primary: "Literata", serif;
 }

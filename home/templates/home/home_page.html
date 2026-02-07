@@ -2,23 +2,124 @@
 {% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
+<main class="max-w-5xl mx-auto px-6 py-20 space-y-32">
 
-<h1 class="text-6xl">{{ page.title }}</h1>
-<div>
-  {{ page.description|richtext }}
-</div>
+  <!-- Hero -->
+  <section class="space-y-10">
+    <div class="space-y-4 max-w-3xl">
+      <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+        {{ page.title }}
+      </h1>
 
-<div class="w-full">
-  <h2>Baca Arc Terbaru</h2>
-  <div>
-    <span>Arc ke {{ latest_arc.arc_number }}</span>
-    <h3>
-      <a href="{% pageurl latest_arc %}">{{ latest_arc.title }}</a>
-    </h3>
-    {% if latest_arc.thumbnail %}
-    {% image latest_arc.thumbnail format-webp class="w-full h-max" %}
-    {% endif %}
-  </div>
-</div>
+      <div class="prose prose-neutral max-w-none">
+        {{ page.description|richtext }}
+      </div>
+    </div>
 
+    <!-- Placeholder: metadata novel -->
+    <div class="flex flex-wrap gap-3 text-sm opacity-80">
+      <span class="badge badge-outline">Fantasi</span>
+      <span class="badge badge-outline">Drama</span>
+      <span class="badge badge-outline">Slow Burn</span>
+      <!-- placeholder -->
+    </div>
+  </section>
+
+  <!-- Latest Arc -->
+  <section class="space-y-8">
+    <div class="flex items-baseline justify-between">
+      <h2 class="text-2xl font-semibold">
+        Arc Terbaru
+      </h2>
+      <!-- placeholder -->
+      <a href="#" class="text-sm link link-hover opacity-70">
+        Lihat semua arc
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div class="space-y-4">
+        <span class="text-sm opacity-70">
+          Arc ke {{ latest_arc.arc_number }}
+        </span>
+
+        <h3 class="text-3xl font-bold leading-snug">
+          <a href="{% pageurl latest_arc %}" class="link link-hover">
+            {{ latest_arc.title }}
+          </a>
+        </h3>
+
+        <!-- placeholder -->
+        <p class="opacity-80 leading-relaxed">
+          Sebuah awal dari konflik yang perlahan tumbuh.
+          Keputusan kecil, konsekuensi panjang, dan rahasia
+          yang mulai terungkap.
+        </p>
+
+        <div class="pt-4">
+          <a
+            href="{% pageurl latest_arc %}"
+            class="btn btn-primary btn-wide"
+          >
+            Mulai Membaca
+          </a>
+        </div>
+      </div>
+
+      {% if latest_arc.thumbnail %}
+      <div class="aspect-[3/4] overflow-hidden rounded-2xl">
+        {% image latest_arc.thumbnail format-webp class="w-full h-full object-cover" %}
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Placeholder: World / Lore -->
+  <section class="space-y-10">
+    <h2 class="text-2xl font-semibold">
+      Dunia Cerita
+      <span class="text-sm opacity-60">(placeholder)</span>
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="p-6 rounded-2xl border border-base-300 space-y-3">
+        <h3 class="font-semibold">Sebuah Kota</h3>
+        <p class="text-sm opacity-80 leading-relaxed">
+          Kota yang terlihat tenang, tapi menyimpan sejarah
+          yang tidak pernah benar-benar mati.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl border border-base-300 space-y-3">
+        <h3 class="font-semibold">Konflik Lama</h3>
+        <p class="text-sm opacity-80 leading-relaxed">
+          Perselisihan yang diwariskan lintas generasi,
+          mempengaruhi pilihan para karakter.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl border border-base-300 space-y-3">
+        <h3 class="font-semibold">Karakter</h3>
+        <p class="text-sm opacity-80 leading-relaxed">
+          Tidak sepenuhnya baik, tidak sepenuhnya jahat.
+          Semua membawa beban masing-masing.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Placeholder: Quote -->
+  <section class="text-center space-y-6">
+    <blockquote class="text-2xl md:text-3xl font-medium leading-relaxed max-w-3xl mx-auto">
+      “Beberapa cerita tidak dimulai dengan teriakan,
+      tapi dengan keheningan yang terlalu lama diabaikan.”
+    </blockquote>
+
+    <p class="text-sm opacity-60">
+      — Kutipan dari salah satu chapter
+      <span>(placeholder)</span>
+    </p>
+  </section>
+
+</main>
 {% endblock content %}
