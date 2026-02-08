@@ -1,21 +1,93 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags %}
 
 {% block content %}
+<main class="max-w-5xl mx-auto px-6 py-20 space-y-24">
 
-<h1 class="text-6xl">{{ page.title }}</h1>
-<div>
-  {% image page.thumbnail format-webp class="w-full h-max" %}
-  {{ page.description|richtext }}
-  <div>
-    {{ page.status }}
-  </div>
-</div>
+  <!-- Arc Header -->
+  <section class="space-y-8 max-w-3xl">
+    <span class="text-sm opacity-60">
+      Arc {{ page.arc_number|default:"?" }}
+      <!-- arc_number: asumsi field, kalau belum ada gapapa -->
+    </span>
 
-{% for chapter in chapters %}
-<div>
-  <a href="{% pageurl chapter %}">{{ chapter.title }}</a>
-</div>
-{% endfor %}
+    <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+      {{ page.title }}
+    </h1>
 
+    <div class="prose prose-neutral max-w-none">
+      {{ page.description|richtext }}
+    </div>
+
+    <!-- placeholder: arc metadata -->
+    <div class="flex flex-wrap gap-3 text-sm opacity-80">
+      <span class="badge badge-outline">12 Chapter</span>
+      <span class="badge badge-outline">Konflik meningkat</span>
+      <span class="badge badge-outline">Slow burn</span>
+      <!-- placeholder -->
+    </div>
+
+    <div class="pt-6">
+      <a href="#" class="btn btn-primary btn-wide">
+        Mulai dari Chapter Pertama
+        <!-- placeholder link -->
+      </a>
+    </div>
+  </section>
+
+  <!-- Chapter List -->
+  <section class="space-y-10">
+    <h2 class="text-2xl font-semibold">
+      Daftar Chapter
+    </h2>
+
+    <div class="space-y-4">
+      {% for chapter in chapters %}
+      <article
+        class="group flex items-center justify-between gap-6
+               border border-base-300 rounded-xl px-5 py-4
+               hover:border-base-content/20 transition"
+      >
+        <div class="space-y-1">
+          <span class="text-xs opacity-60">
+            Chapter {{ forloop.counter }}
+          </span>
+
+          <h3 class="text-lg font-medium">
+            <a href="{% pageurl chapter %}" class="link link-hover">
+              {{ chapter.title }}
+            </a>
+          </h3>
+
+          <!-- placeholder -->
+          <p class="text-sm opacity-70">
+            Awal dari rangkaian peristiwa yang perlahan
+            mengubah arah cerita.
+          </p>
+        </div>
+
+        <div class="shrink-0 text-sm opacity-60">
+          ~7 menit baca
+          <!-- placeholder -->
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Placeholder: Arc Note / Editor Note -->
+  <section class="border-t border-base-300 pt-12 space-y-4 max-w-3xl">
+    <h3 class="text-lg font-semibold">
+      Catatan Arc
+      <span class="text-sm opacity-60">(placeholder)</span>
+    </h3>
+
+    <p class="text-sm opacity-90 leading-relaxed">
+      Arc ini ditulis dengan tempo yang lebih pelan,
+      berfokus pada perkembangan karakter dan konsekuensi
+      emosional dari konflik sebelumnya.
+    </p>
+  </section>
+
+</main>
 {% endblock content %}

@@ -2,30 +2,89 @@
 {% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
+<main class="max-w-3xl mx-auto px-6 py-20 space-y-16">
 
-<h1 class="text-6xl">{{ page.title }}</h1>
-<div>
-  {% image page.thumbnail format-webp class="w-full h-max" %}
-  <div class="font-serif">
+  <!-- Chapter Header -->
+  <header class="space-y-4 text-center">
+    <!-- placeholder -->
+    <p class="text-sm opacity-60">
+      Chapter {{ page.chapter_number|default:"?" }}
+    </p>
+
+    <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+      {{ page.title }}
+    </h1>
+
+    <!-- placeholder -->
+    <p class="text-sm opacity-60">
+      ~8 menit baca
+    </p>
+  </header>
+
+  <!-- Thumbnail (optional) -->
+  {% if page.thumbnail %}
+  <figure class="space-y-2">
+    {% image page.thumbnail format-webp class="w-full rounded-2xl" %}
+    <!-- placeholder -->
+    <figcaption class="text-xs text-center opacity-60">
+      Ilustrasi pembuka chapter
+    </figcaption>
+  </figure>
+  {% endif %}
+
+  <!-- Chapter Content -->
+  <article
+    class="prose prose-neutral prose-lg max-w-none font-serif leading-relaxed"
+  >
     {{ page.content|richtext }}
-  </div>
-  <div class="font-serif">
-    {{ page.postscript|richtext }}
-  </div>
-</div>
+  </article>
 
-<nav>
-  {% if page.prev_chapter %}
-    <a href="{{ page.prev_chapter.url }}">
-      ← {{ page.prev_chapter.title }}
-    </a>
+  <!-- Postscript -->
+  {% if page.postscript %}
+  <section class="border-t border-base-300 pt-10 space-y-4">
+    <h2 class="text-lg font-semibold">
+      Catatan Penulis
+      <span class="text-sm opacity-60">(placeholder)</span>
+    </h2>
+
+    <div class="prose prose-neutral max-w-none font-serif text-sm opacity-90">
+      {{ page.postscript|richtext }}
+    </div>
+  </section>
   {% endif %}
 
-  {% if page.next_chapter %}
-    <a href="{{ page.next_chapter.url }}">
-      {{ page.next_chapter.title }} →
-    </a>
-  {% endif %}
-</nav>
+  <!-- Chapter Navigation -->
+  <nav
+    class="flex items-center justify-between gap-6 pt-16 border-t border-base-300"
+  >
+    <div>
+      {% if page.prev_chapter %}
+      <a
+        href="{{ page.prev_chapter.url }}"
+        class="group inline-flex flex-col gap-1 link link-hover"
+      >
+        <span class="text-xs opacity-60">← Chapter sebelumnya</span>
+        <span class="font-medium">
+          {{ page.prev_chapter.title }}
+        </span>
+      </a>
+      {% endif %}
+    </div>
 
+    <div class="text-right">
+      {% if page.next_chapter %}
+      <a
+        href="{{ page.next_chapter.url }}"
+        class="group inline-flex flex-col gap-1 link link-hover"
+      >
+        <span class="text-xs opacity-60">Chapter selanjutnya →</span>
+        <span class="font-medium">
+          {{ page.next_chapter.title }}
+        </span>
+      </a>
+      {% endif %}
+    </div>
+  </nav>
+
+</main>
 {% endblock content %}

@@ -2,16 +2,88 @@
 {% load static wagtailcore_tags %}
 
 {% block content %}
+<main class="max-w-5xl mx-auto px-6 py-20 space-y-20">
 
-<h1 class="text-6xl">{{ page.title }}</h1>
-<div>
-  {{ page.description|richtext }}
-</div>
+  <!-- Page Header -->
+  <section class="space-y-6 max-w-3xl">
+    <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+      {{ page.title }}
+    </h1>
 
-{% for arc in arcs %}
-<div>
-  <a href="{% pageurl arc %}">{{ arc.title }}</a>
-</div>
-{% endfor %}
+    <div class="prose prose-neutral max-w-none">
+      {{ page.description|richtext }}
+    </div>
 
+    <!-- placeholder -->
+    <p class="text-sm opacity-70">
+      Cerita ini dibagi menjadi beberapa arc.
+      Setiap arc menandai perubahan, konflik baru,
+      atau konsekuensi dari keputusan sebelumnya.
+    </p>
+  </section>
+
+  <!-- Arc List -->
+  <section class="space-y-10">
+    <h2 class="text-2xl font-semibold">
+      Daftar Arc
+    </h2>
+
+    <div class="space-y-6">
+      {% for arc in arcs %}
+      <article
+        class="group border border-base-300 rounded-2xl p-6 transition
+               hover:border-base-content/20"
+      >
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div class="space-y-2 max-w-2xl">
+            <span class="text-sm opacity-60">
+              Arc {{ arc.arc_number }}
+            </span>
+
+            <h3 class="text-2xl font-semibold leading-snug">
+              <a
+                href="{% pageurl arc %}"
+                class="link link-hover"
+              >
+                {{ arc.title }}
+              </a>
+            </h3>
+
+            <!-- placeholder -->
+            <p class="text-sm opacity-80 leading-relaxed">
+              Sebuah fase cerita di mana karakter mulai
+              menghadapi konsekuensi dari pilihan-pilihan
+              sebelumnya, dan arah cerita perlahan berubah.
+            </p>
+          </div>
+
+          <div class="shrink-0">
+            <a
+              href="{% pageurl arc %}"
+              class="btn btn-outline btn-sm"
+            >
+              Buka Arc
+            </a>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Placeholder: Reading Order / Note -->
+  <section class="border-t border-base-300 pt-12 space-y-4">
+    <h3 class="text-lg font-semibold">
+      Catatan Pembaca
+      <span class="text-sm opacity-60">(placeholder)</span>
+    </h3>
+
+    <p class="text-sm opacity-80 max-w-3xl leading-relaxed">
+      Arc disarankan dibaca secara berurutan untuk mendapatkan
+      pengalaman cerita yang utuh. Beberapa detail kecil di awal
+      akan memiliki dampak besar di arc berikutnya.
+    </p>
+  </section>
+
+</main>
 {% endblock content %}

@@ -4,33 +4,128 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
-<h1>Search</h1>
 
-<form action="{% url 'search' %}" method="get">
-    <input type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
-    <input type="submit" value="Search" class="button">
-</form>
+<section class="max-w-5xl mx-auto px-4 py-10">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold mb-2">Cari Novel</h1>
+    <p class="text-base-content/70">Temukan cerita, karakter, atau dunia favoritmu.</p>
+  </div>
+
+  <!-- Search Form -->
+
+  <form action="{% url 'search' %}" method="get" class="mb-10">
+    <div class="join w-full">
+      <input
+        type="text"
+        name="query"
+        placeholder="Judul novel, nama karakter, atau penulis"
+        class="input input-bordered join-item w-full"
+        {% if search_query %}value="{{ search_query }}"{% endif %}
+      />
+      <button type="submit" class="btn btn-primary join-item">Search</button>
+    </div>
+  </form>
+
+  <!-- Result State -->
 
 {% if search_results %}
-<ul>
+
+  <div class="space-y-4">
     {% for result in search_results %}
-    <li>
-        <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
+    <article class="card bg-base-100 shadow-sm border border-base-300">
+      <div class="card-body">
+        <h2 class="card-title text-lg">
+          <a href="{% pageurl result %}" class="hover:underline">
+            {{ result }}
+          </a>
+        </h2>
         {% if result.search_description %}
-        {{ result.search_description }}
+        <p class="text-sm text-base-content/70 line-clamp-3">
+          {{ result.search_description }}
+        </p>
+        {% else %}
+        <p class="text-sm text-base-content/50 italic">
+          Tidak ada deskripsi singkat untuk novel ini.
+        </p>
         {% endif %}
-    </li>
+        <div class="card-actions justify-end mt-2">
+          <a href="{% pageurl result %}" class="btn btn-link btn-sm">Baca →</a>
+        </div>
+      </div>
+    </article>
     {% endfor %}
-</ul>
+  </div>
 
-{% if search_results.has_previous %}
-<a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
-{% endif %}
+  <!-- Pagination -->
 
+  <div class="flex justify-between items-center mt-10">
+    {% if search_results.has_previous %}
+    <a
+      href="{% url 'search' %}?query={{ search_query|urlencode }}&page={{ search_results.previous_page_number }}"
+      class="btn btn-outline btn-sm"
+    >
+      ← Previous
+    </a>
+    {% else %}
+    <span></span>
+    {% endif %}
+
+```
 {% if search_results.has_next %}
-<a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
+<a
+  href="{% url 'search' %}?query={{ search_query|urlencode }}&page={{ search_results.next_page_number }}"
+  class="btn btn-outline btn-sm"
+>
+  Next →
+</a>
 {% endif %}
+```
+
+  </div>
+
 {% elif search_query %}
-No results found
-{% endif %}
+
+  <!-- Empty Result -->
+
+  <div class="text-center py-20">
+    <h2 class="text-xl font-semibold mb-2">Hasil tidak ditemukan</h2>
+    <p class="text-base-content/60 mb-6">
+      Kami tidak menemukan novel dengan kata kunci <span class="font-medium">“{{ search_query }}”</span>.
+    </p>
+
+```
+<!-- Placeholder Suggestions -->
+<div class="max-w-md mx-auto">
+  <div class="alert alert-info mb-4">
+    <span>Coba kata kunci lain atau jelajahi novel populer di bawah ini.</span>
+  </div>
+  <ul class="space-y-3">
+    <li class="p-4 border border-base-300 rounded-lg text-left">
+      <p class="font-medium">Senja di Ujung Dunia</p>
+      <p class="text-sm text-base-content/60">Fantasi · Drama</p>
+    </li>
+    <li class="p-4 border border-base-300 rounded-lg text-left">
+      <p class="font-medium">Langit yang Retak</p>
+      <p class="text-sm text-base-content/60">Sci‑Fi · Mystery</p>
+    </li>
+    <li class="p-4 border border-base-300 rounded-lg text-left">
+      <p class="font-medium">Catatan Terakhir Penjelajah</p>
+      <p class="text-sm text-base-content/60">Petualangan · Fantasi</p>
+    </li>
+  </ul>
+</div>
+```
+
+  </div>
+  {% else %}
+  <!-- Initial State -->
+  <div class="text-center py-24">
+    <h2 class="text-xl font-semibold mb-2">Mulai mencari</h2>
+    <p class="text-base-content/60">
+      Ketik judul novel atau kata kunci untuk menemukan cerita yang ingin kamu baca.
+    </p>
+  </div>
+  {% endif %}
+</section>
 {% endblock %}
