@@ -16,13 +16,13 @@
       </div>
     </div>
 
-    <!-- Placeholder: metadata novel -->
+    {% if page.genres %}
     <div class="flex flex-wrap gap-3 text-sm opacity-80">
-      <span class="badge badge-outline">Fantasi</span>
-      <span class="badge badge-outline">Drama</span>
-      <span class="badge badge-outline">Slow Burn</span>
-      <!-- placeholder -->
+      {% for block in page.genres %}
+      <span class="badge badge-outline">{{ block.value }}</span>
+      {% endfor %}
     </div>
+    {% endif %}
   </section>
 
   <!-- Latest Arc -->
@@ -32,7 +32,7 @@
         Arc Terbaru
       </h2>
       <!-- placeholder -->
-      <a href="#" class="text-sm link link-hover opacity-70">
+      <a href="{% slugurl 'arcs' %}" class="text-sm link link-hover opacity-70">
         Lihat semua arc
       </a>
     </div>
@@ -50,11 +50,9 @@
         </h3>
 
         <!-- placeholder -->
-        <p class="opacity-80 leading-relaxed">
-          Sebuah awal dari konflik yang perlahan tumbuh.
-          Keputusan kecil, konsekuensi panjang, dan rahasia
-          yang mulai terungkap.
-        </p>
+        <div class="prose prose-neutral opacity-80 leading-relaxed">
+          {{ latest_arc.description|richtext }}
+        </div>
 
         <div class="pt-4">
           <a
@@ -67,9 +65,7 @@
       </div>
 
       {% if latest_arc.thumbnail %}
-      <div class="aspect-[3/4] overflow-hidden rounded-2xl">
-        {% image latest_arc.thumbnail format-webp class="w-full h-full object-cover" %}
-      </div>
+      {% image latest_arc.thumbnail format-webp class="w-full h-auto rounded-2xl" %}
       {% endif %}
     </div>
   </section>
@@ -109,17 +105,19 @@
   </section>
 
   <!-- Placeholder: Quote -->
+  {% if page.quote_text %}
   <section class="text-center space-y-6">
     <blockquote class="text-2xl md:text-3xl font-medium leading-relaxed max-w-3xl mx-auto">
-      “Beberapa cerita tidak dimulai dengan teriakan,
-      tapi dengan keheningan yang terlalu lama diabaikan.”
+      {{ page.quote_text }}
     </blockquote>
-
+    
+    {% if page.quote_author %}
     <p class="text-sm opacity-60">
-      — Kutipan dari salah satu chapter
-      <span>(placeholder)</span>
+    - {{ page.quote_author }}
     </p>
+    {% endif %}
   </section>
+  {% endif %}
 
 </main>
 {% endblock content %}

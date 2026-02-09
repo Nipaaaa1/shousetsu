@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
 <main class="max-w-5xl mx-auto px-6 py-20 space-y-24">
@@ -8,12 +8,13 @@
   <section class="space-y-8 max-w-3xl">
     <span class="text-sm opacity-60">
       Arc {{ page.arc_number|default:"?" }}
-      <!-- arc_number: asumsi field, kalau belum ada gapapa -->
     </span>
 
     <h1 class="text-5xl md:text-6xl font-bold leading-tight">
       {{ page.title }}
     </h1>
+
+    {% image page.thumbnail format-webp class="w-full h-max rounded-2xl" %}
 
     <div class="prose prose-neutral max-w-none">
       {{ page.description|richtext }}

@@ -12,7 +12,7 @@ class ArcIndexPage(Page):
 
     def get_context(self, request):
         context = super().get_context(request)
-        arcs = self.get_children().live().order_by("-first_published_at")  # pyright: ignore
+        arcs = ArcDetailPage.objects.live().order_by("-first_published_at")  # pyright: ignore
 
         context["arcs"] = arcs
         return context
