@@ -40,9 +40,8 @@
 
         <!-- Desktop Menu -->
         <ul class="hidden md:flex items-center gap-8 text-sm">
-          <li><a href="#" class="link link-hover">Beranda</a></li>
-          <li><a href="#" class="link link-hover">Daftar Arc</a></li>
-          <li><a href="#" class="link link-hover">Tentang</a></li>
+          <li><a href="{% pageurl current_site.root_page %}" class="link link-hover">Beranda</a></li>
+          <li><a href="{% slugurl 'arcs' %}" class="link link-hover">Daftar Arc</a></li>
         </ul>
 
         <!-- Hamburger -->
@@ -66,19 +65,16 @@
         class="md:hidden hidden border-t border-base-300"
       >
         <ul class="flex flex-col px-6 py-4 gap-4 text-sm">
-          <li><a href="#" class="link link-hover">Beranda</a></li>
-          <li><a href="#" class="link link-hover">Daftar Arc</a></li>
-          <li><a href="#" class="link link-hover">Tentang</a></li>
+          <li><a href="{% pageurl current_site.root_page %}" class="link link-hover">Beranda</a></li>
+          <li><a href="{% slugurl 'arcs' %}" class="link link-hover">Daftar Arc</a></li>
         </ul>
       </div>
     </header>
 
-    <!-- Content -->
     <main>
       {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
     <footer class="border-t border-base-300 mt-24">
       <div class="max-w-6xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-2">
         <div class="space-y-3">

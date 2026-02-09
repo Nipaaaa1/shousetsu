@@ -5,9 +5,17 @@ from wagtail.fields import RichTextField
 
 
 class ArcIndexPage(Page):
+    max_count = 1
     description = RichTextField(blank=True)
+    readers_note = models.TextField(
+        default="Arc disarankan dibaca secara berurutan untuk mendapatkan pengalaman cerita yang utuh. Beberapa detail kecil di awal akan memiliki dampak besar di arc berikutnya."
+    )
 
-    content_panels = Page.content_panels + [FieldPanel("description")]
+    content_panels = Page.content_panels + [
+        FieldPanel("readers_note"),
+        FieldPanel("description"),
+    ]
+    parent_page_types = ["home.HomePage"]
     subpage_types = ["ArcDetailPage"]
 
     def get_context(self, request):
@@ -16,6 +24,10 @@ class ArcIndexPage(Page):
 
         context["arcs"] = arcs
         return context
+
+    def save(self, *args, **kwargs):
+        self.slug = "arcs"
+        super().save(*args, **kwargs)
 
 
 class ArcStatusChoices(models.TextChoices):
