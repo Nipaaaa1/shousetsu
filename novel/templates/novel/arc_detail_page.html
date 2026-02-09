@@ -4,7 +4,6 @@
 {% block content %}
 <main class="max-w-5xl mx-auto px-6 py-20 space-y-24">
 
-  <!-- Arc Header -->
   <section class="space-y-8 max-w-3xl">
     <span class="text-sm opacity-60">
       Arc {{ page.arc_number|default:"?" }}
@@ -14,29 +13,26 @@
       {{ page.title }}
     </h1>
 
-    {% image page.thumbnail format-webp class="w-full h-max rounded-2xl" %}
 
     <div class="prose prose-neutral max-w-none">
       {{ page.description|richtext }}
     </div>
 
-    <!-- placeholder: arc metadata -->
     <div class="flex flex-wrap gap-3 text-sm opacity-80">
-      <span class="badge badge-outline">12 Chapter</span>
-      <span class="badge badge-outline">Konflik meningkat</span>
-      <span class="badge badge-outline">Slow burn</span>
-      <!-- placeholder -->
+      <span class="badge badge-outline">{{ chapters|length }} Chapter</span>
     </div>
 
+    {% image page.thumbnail format-webp class="w-full h-max rounded-2xl" %}
+
     <div class="pt-6">
-      <a href="#" class="btn btn-primary btn-wide">
+      <a href="{% pageurl first_chapter %}" class="btn btn-primary btn-wide items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 256 256"><path fill="currentColor" d="M232 48h-72a40 40 0 0 0-32 16a40 40 0 0 0-32-16H24a8 8 0 0 0-8 8v144a8 8 0 0 0 8 8h72a24 24 0 0 1 24 24a8 8 0 0 0 16 0a24 24 0 0 1 24-24h72a8 8 0 0 0 8-8V56a8 8 0 0 0-8-8M96 192H32V64h64a24 24 0 0 1 24 24v112a39.8 39.8 0 0 0-24-8m128 0h-64a39.8 39.8 0 0 0-24 8V88a24 24 0 0 1 24-24h64Z"/></svg>
         Mulai dari Chapter Pertama
         <!-- placeholder link -->
       </a>
     </div>
   </section>
 
-  <!-- Chapter List -->
   <section class="space-y-10">
     <h2 class="text-2xl font-semibold">
       Daftar Chapter
@@ -59,36 +55,10 @@
               {{ chapter.title }}
             </a>
           </h3>
-
-          <!-- placeholder -->
-          <p class="text-sm opacity-70">
-            Awal dari rangkaian peristiwa yang perlahan
-            mengubah arah cerita.
-          </p>
-        </div>
-
-        <div class="shrink-0 text-sm opacity-60">
-          ~7 menit baca
-          <!-- placeholder -->
         </div>
       </article>
       {% endfor %}
     </div>
   </section>
-
-  <!-- Placeholder: Arc Note / Editor Note -->
-  <section class="border-t border-base-300 pt-12 space-y-4 max-w-3xl">
-    <h3 class="text-lg font-semibold">
-      Catatan Arc
-      <span class="text-sm opacity-60">(placeholder)</span>
-    </h3>
-
-    <p class="text-sm opacity-90 leading-relaxed">
-      Arc ini ditulis dengan tempo yang lebih pelan,
-      berfokus pada perkembangan karakter dan konsekuensi
-      emosional dari konflik sebelumnya.
-    </p>
-  </section>
-
 </main>
 {% endblock content %}

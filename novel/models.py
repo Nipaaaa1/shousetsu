@@ -63,7 +63,10 @@ class ArcDetailPage(Page):
         context = super().get_context(request)
         chapters = self.get_children().live().order_by("-first_published_at")  # pyright: ignore
 
+        first_chapter = chapters.last()
+
         context["chapters"] = chapters
+        context["first_chapter"] = first_chapter
         return context
 
     def save(self, *args, **kwargs):
