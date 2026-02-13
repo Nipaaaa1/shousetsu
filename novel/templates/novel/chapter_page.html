@@ -4,9 +4,7 @@
 {% block content %}
 <main class="max-w-3xl mx-auto px-6 py-20 space-y-16">
 
-  <!-- Chapter Header -->
   <header class="space-y-4 text-center">
-    <!-- placeholder -->
     <p class="text-sm opacity-60">
       Chapter {{ page.chapter_number|default:"?" }}
     </p>
@@ -15,36 +13,30 @@
       {{ page.title }}
     </h1>
 
-    <!-- placeholder -->
     <p class="text-sm opacity-60">
-      ~8 menit baca
+    ~{{ page.reading_time }} menit baca
     </p>
   </header>
 
-  <!-- Thumbnail (optional) -->
   {% if page.thumbnail %}
   <figure class="space-y-2">
     {% image page.thumbnail format-webp class="w-full rounded-2xl" %}
-    <!-- placeholder -->
     <figcaption class="text-xs text-center opacity-60">
       Ilustrasi pembuka chapter
     </figcaption>
   </figure>
   {% endif %}
 
-  <!-- Chapter Content -->
   <article
     class="prose prose-neutral prose-lg max-w-none font-serif leading-relaxed"
   >
     {{ page.content|richtext }}
   </article>
 
-  <!-- Postscript -->
   {% if page.postscript %}
   <section class="border-t border-base-300 pt-10 space-y-4">
     <h2 class="text-lg font-semibold">
       Catatan Penulis
-      <span class="text-sm opacity-60">(placeholder)</span>
     </h2>
 
     <div class="prose prose-neutral max-w-none font-serif text-sm opacity-90">
@@ -53,7 +45,15 @@
   </section>
   {% endif %}
 
-  <!-- Chapter Navigation -->
+  {% if page.get_parent %}
+  <a
+    href="{{ page.get_parent.url }}"
+    class="inline-flex items-center gap-2 text-sm link link-hover opacity-80"
+  >
+    ← Kembali ke detail Arc
+  </a>
+{% endif %}
+
   <nav
     class="flex items-center justify-between gap-6 pt-16 border-t border-base-300"
   >

@@ -1,4 +1,7 @@
+import math
+
 from django.db import models
+from django.utils.html import strip_tags
 from wagtail.admin.panels import FieldPanel
 from wagtail.models import Page
 from wagtail.fields import RichTextField
@@ -101,6 +104,12 @@ class ChapterPage(Page):
         FieldPanel("postscript"),
     ]
     parent_page_types = ["ArcDetailPage"]
+
+    @property
+    def reading_time(self):
+        text = strip_tags(self.content)
+        words = text.split()
+        return max(1, math.ceil(len(words) / 200))
 
     @property
     def prev_chapter(self):
