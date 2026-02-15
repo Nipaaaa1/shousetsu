@@ -1,5 +1,4 @@
 {% load static wagtailcore_tags wagtailuserbar %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,22 +28,18 @@
   <body class="font-primary" data-theme="retro">
     {% wagtailuserbar %}
 
-    <!-- Navigation -->
     <header class="border-b border-base-300 sticky top-0 bg-base-100 z-99">
       <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <!-- Brand -->
         <a href="/" class="text-xl font-semibold">
       {% wagtail_site as current_site %}
       {% if current_site and current_site.site_name %}{{ current_site.site_name }}{% endif %}
         </a>
 
-        <!-- Desktop Menu -->
         <ul class="hidden md:flex items-center gap-8 text-sm">
           <li><a href="{% pageurl current_site.root_page %}" class="link link-hover">Beranda</a></li>
           <li><a href="{% slugurl 'arcs' %}" class="link link-hover">Daftar Arc</a></li>
         </ul>
 
-        <!-- Hamburger -->
         <button
           id="menu-button"
           class="md:hidden btn btn-ghost btn-square"
@@ -59,7 +54,6 @@
         </button>
       </nav>
 
-      <!-- Mobile Menu -->
       <div
         id="mobile-menu"
         class="md:hidden hidden border-t border-base-300"
@@ -82,9 +76,9 @@
       {% wagtail_site as current_site %}
       {% if current_site and current_site.site_name %}{{ current_site.site_name }}{% endif %}
           </h3>
+          
           <p class="text-sm opacity-70 max-w-md">
-            Sebuah cerita yang disajikan perlahan.
-            Dibaca tanpa gangguan, dinikmati tanpa terburu-buru.
+            {{ settings.dashboard.FooterSettings.description }}
           </p>
         </div>
 
