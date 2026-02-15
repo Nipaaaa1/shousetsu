@@ -82,11 +82,13 @@
           </p>
         </div>
 
+        {% if settings.dashboard.FooterSettings.social_media %}
         <div class="flex gap-6 md:justify-end text-sm">
-          <a href="#" class="link link-hover">Tentang</a>
-          <a href="#" class="link link-hover">Kontak</a>
-          <a href="#" class="link link-hover">Kebijakan</a>
+          {% for block in settings.dashboard.FooterSettings.social_media %}
+          <a href="{{ block.value.url }}" class="link link-hover">{{ block.value.provider }}</a>
+          {% endfor %}
         </div>
+        {% endif %}
       </div>
 
       <div class="text-center text-xs opacity-60 pb-6">
